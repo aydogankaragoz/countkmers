@@ -54,7 +54,7 @@ bloom_filter build_bloom_filter(unsigned long long int projected_element_count,
 }
 
 template<typename T>
-void printHead(T s, int c){
+void printHead(T s, int c) {
     std::cout << "inserting into vector" << "\n";
     std::vector<std::pair<std::string, int> > items;
     for (auto const& kmer : s) {
@@ -71,11 +71,9 @@ void printHead(T s, int c){
 
     for (int i=0; i < c; i++)
         std::cout << items[i].second << " -> " << items[i].first << std::endl;
-
 }
-int main ( int argc, char *argv[] ) {
-    if (argc < 4)
-    {
+int main(int argc, char *argv[] ) {
+    if (argc < 4) {
        std::cerr << "USAGE: ./countkmers <filename> <kmersize> <topcount>\n";
        return -1;
     }
