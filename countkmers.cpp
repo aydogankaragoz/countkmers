@@ -73,34 +73,28 @@ void printHead(T s, int c){
         std::cout << items[i].second << " -> " << items[i].first << std::endl;
 
 }
+int main ( int argc, char *argv[] ) {
+    if (argc < 4)
+    {
+       std::cerr << "USAGE: ./countkmers <filename> <kmersize> <topcount>\n";
+       return -1;
+    }
 
-// int main(int argc, char **argv)
-int main() {
-//    if (argc < 2) // the program's name is the first argument
-//    {
-//       std::cerr << "Not enough arguments!\n";
-//       return -1;
-//    }
+    char* file_name = argv[1];
+    int kmersize = std::atoi(argv[2]);
+    int topcount = std::atoi(argv[3]);
 
-    int kmersize = 30;
-//    int kmersize = std::atoi(argv[1]);
-    int topcount = 25;
-//    int topcount = std::atoi(argv[2]);
     char *kmerArray = new char[kmersize];
     int kacKmer = 0;
 
-    // Instantiate Bloom Filter
     bloom_filter filter = build_bloom_filter(100000000, 0.0001);
 
     google::sparse_hash_map<std::string, int, std::hash<std::string>, eqstr> kmers;
 
     size_t length;
-    auto f = map_file("ERR047698.filt.fastq", length);
-    //auto f = map_file("ERR068396_2.filt.fastq", length);
+    auto f = map_file(file_name, length);
     auto l = f + length;
     auto previous_f = f;
-
-    std::cout << "length = " << length << "\n";
 
     uintmax_t m_numLines = 0;
     while (f && f != l)
@@ -116,10 +110,8 @@ int main() {
 
                 std::string kmer_str(kmerArray);
                 if (!filter.contains(kmer_str)) {
-                    // std::cout << "Inserting        : " << kmer_str << "\n";
                     filter.insert(kmer_str);
                 } else {
-                    // std::cout << "Already Contains : " << kmer_str << "\n";
                     kmers[kmer_str]++;
                 }
             }
@@ -129,10 +121,6 @@ int main() {
     }
 
     delete [] kmerArray;
-    std::cout << "m_numLines = " << m_numLines << "\n";
-    std::cout << "kacKmer = " << kacKmer << "\n";
 
     printHead(kmers, topcount);
-
 }
-
