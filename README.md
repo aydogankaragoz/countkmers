@@ -9,4 +9,4 @@ https://github.com/ArashPartow/bloom
 g++ -std=c++11 countkmers.cpp -o countkmers
 
 ## Usage
-./countkmers <filename> <kmersize> <topcount>
+./countkmers filename kmersize topcount
