@@ -99,10 +99,12 @@ int main(int argc, char *argv[] ) {
         if ((f = static_cast<const char*>(memchr(f, '\n', l-f)))) {
         m_numLines++;
 
+        //We are interested in every 2nd line of the 4 line set
         if (m_numLines%4 == 2) {
             auto sequence_len = f - previous_f;
 
             for (int i = 0; i <= sequence_len - kmersize; i++) {
+                //Directly copy k-mer from file
                 memcpy(kmerArray, previous_f + i, kmersize);
                 kacKmer++;
 
